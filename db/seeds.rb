@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
+
+
+(0..10).each do |i|
+  Fabricate(:post_it, :created_at => Time.now - i.hours, :updated_at => Time.now - i.hours)
+end

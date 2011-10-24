@@ -1,5 +1,6 @@
 # app/config/application.yml
 defaults: &defaults
+  salt_token: 'Cn+7#mQM-~]9=hK%cLZ.F\[2_YEH=sjcFVO}Ws6TL3uWJ1C.&5Zs3F)GNivsJ;?W'
   cool:
     saweet: nested settings
   neat_setting: 24
