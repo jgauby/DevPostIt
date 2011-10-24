@@ -41,6 +41,9 @@ module DevPostIt
 
     # Enable the asset pipeline
     config.assets.enabled = true
+    
+    config.assets.paths << File.join(Rails.root,'vendor/plugins/syntax_highlighter/styles')
+    config.assets.paths << File.join(Rails.root,'vendor/plugins/syntax_highlighter/scripts')
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'

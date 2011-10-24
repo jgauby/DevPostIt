@@ -1,6 +1,37 @@
 # app/config/application.yml
 defaults: &defaults
+
   salt_token: 'Cn+7#mQM-~]9=hK%cLZ.F\[2_YEH=sjcFVO}Ws6TL3uWJ1C.&5Zs3F)GNivsJ;?W'
+  
+  # List of activated languages (see folder vendor/plugins/syntax_highlighter/scripts
+  # for list available language)
+  languages:
+    AppleScript: AppleScript
+    AS3: AS3
+    Bash: Bash
+    ColdFusion: ColdFusion
+    C++: Cpp
+    C#: CSharp
+    Css: Css
+    Delphi: Delphi
+    Diff: Diff
+    Erlang: Erlang
+    Groovy: Groovy
+    Java: Java
+    JavaFX: JavaFX
+    Javascript: JScript
+    Perl: Perl
+    Php: Php
+    Plain: Plain
+    PowerShell: PowerShell
+    Python: Python
+    Ruby: Ruby
+    Sass: Sass
+    Scala: Scala
+    Sql: Sql
+    Vb: Vb
+    Xml: Xml
+  
   cool:
     saweet: nested settings
   neat_setting: 24
