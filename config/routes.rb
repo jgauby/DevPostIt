@@ -1,5 +1,7 @@
 DevPostIt::Application.routes.draw do
   resources :post_its
+  
+  root :to => 'post_its#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
