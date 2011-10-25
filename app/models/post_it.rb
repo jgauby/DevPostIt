@@ -1,9 +1,6 @@
 class PostIt < ActiveRecord::Base
-  has_one :language
-  
   after_validation :initialize_token, :on => :create
-  
-  
+ 
   
   protected
 

@@ -6,8 +6,7 @@ class CreatePostIts < ActiveRecord::Migration
       t.string :username
       t.string :email
       t.string :token
-      
-      t.references :language
+      t.string :language
 
       t.timestamps
     end
