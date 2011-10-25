@@ -19,7 +19,7 @@ defaults: &defaults
     Groovy: Groovy
     Java: Java
     JavaFX: JavaFX
-    Javascript: JScript
+    JavaScript: JScript
     Perl: Perl
     Php: Php
     Plain: Plain

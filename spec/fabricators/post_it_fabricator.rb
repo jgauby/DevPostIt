@@ -3,6 +3,5 @@ Fabricator(:post_it) do
   content  { Faker::Lorem.paragraph }
   username { Faker::Name.name }
   email    { Faker::Internet.email }
-  
-  language!
+  language { 'Ruby' }
 end

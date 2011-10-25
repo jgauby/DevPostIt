@@ -10,22 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111024190930) do
-
-  create_table "languages", :force => true do |t|
-    t.string   "name"
-    t.text     "identifiers"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20111024190450) do
 
   create_table "post_its", :force => true do |t|
-    t.string   "title"
-    t.text     "content"
-    t.string   "username"
-    t.string   "email"
-    t.string   "token"
-    t.integer  "language_id"
+    t.string   "title",      :null => false
+    t.text     "content",    :null => false
+    t.string   "username",   :null => false
+    t.string   "email",      :null => false
+    t.string   "token",      :null => false
+    t.string   "language"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

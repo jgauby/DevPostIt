@@ -6,6 +6,7 @@
     %th Content
     %th Username
     %th Email
+    %th Language
     %th Token
     %th
     %th
@@ -17,6 +18,7 @@
       %td= post_it.content
       %td= post_it.username
       %td= post_it.email
+      %td= post_it.language
       %td= post_it.token
       %td= link_to 'Show', post_it
       %td= link_to 'Edit', edit_post_it_path(post_it)

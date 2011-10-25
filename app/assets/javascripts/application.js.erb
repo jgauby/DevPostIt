@@ -6,10 +6,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require_tree .
 
 //= require shCore
 <% Settings.languages.values.each do |language|  %>
   <%= evaluate "shBrush#{language}.js" %>
 <% end %>
-
-//= require_tree .

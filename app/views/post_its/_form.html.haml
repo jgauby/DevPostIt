@@ -1,10 +1,13 @@
 = semantic_form_for @post_it do |f|
   = f.inputs do
-      = f.input :title
-      = f.input :content
-      = f.input :username
-      = f.input :email
-      = f.input :token
+    = f.input :title
+    = f.input :language, :collection => Settings.languages
+    = f.input :content
+    = f.input :username
+    = f.input :email
   
   = f.buttons do
     = f.commit_button
+
+%h1 Preview
+%pre#preview{:class => 'brush: plain;'}
