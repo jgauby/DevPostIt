@@ -6,8 +6,7 @@ describe "post_its/new.html.haml" do
       :title => "MyString",
       :content => "MyText",
       :username => "MyString",
-      :email => "MyString",
-      :token => "MyString"
+      :email => "MyString"
     ).as_new_record)
   end
 
@@ -20,7 +19,6 @@ describe "post_its/new.html.haml" do
       assert_select "textarea#post_it_content", :name => "post_it[content]"
       assert_select "input#post_it_username", :name => "post_it[username]"
       assert_select "input#post_it_email", :name => "post_it[email]"
-      assert_select "input#post_it_token", :name => "post_it[token]"
     end
   end
 end

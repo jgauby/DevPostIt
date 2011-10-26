@@ -24,7 +24,13 @@ describe PostItsController do
   # PostIt. As you add validations to PostIt, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {
+      'title' =>  'Hello word in Ruby',
+      'content' => 'puts "Hello world !',
+      'username' => 'user',
+      'email'    => 'user@test.com',
+      'language' => 'Ruby'
+    }
   end
 
   describe "GET index" do
