@@ -35,6 +35,8 @@ gem "settingslogic"
 gem 'formtastic'
 gem 'will_paginate'
 
+gem "js-routes"
+
 group :development, :test do
   gem "rspec-rails"
   gem "fabrication"
