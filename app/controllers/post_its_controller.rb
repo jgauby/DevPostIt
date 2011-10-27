@@ -2,12 +2,17 @@ class PostItsController < ApplicationController
   # GET /post_its
   # GET /post_its.json
   def index
-    @post_its = PostIt.all
+    @post_its = PostIt.order('updated_at DESC, id DESC').page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => @post_its }
+      format.json { render :json => @post_its, :only => [:id, :username, :title, :updated_at] }
     end
+  end
+  
+  # GET /post_its/last_updated
+  def last_updated    
+    render :json => PostIt.last_updated, :only => [:updated_at]
   end
 
   # GET /post_its/1

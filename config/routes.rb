@@ -1,6 +1,9 @@
 DevPostIt::Application.routes.draw do
-  resources :post_its
-  
+
+  resources :post_its do
+    get 'last_updated', :on => :collection
+  end
+
   root :to => 'post_its#index'
 
   # The priority is based upon order of creation:

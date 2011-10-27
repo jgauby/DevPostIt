@@ -4,7 +4,7 @@
     = f.input :language, :collection => Settings.languages
     = f.input :content
     = f.input :username
-    = f.input :email
+    = f.input :email, :required => true
   
   = f.buttons do
     = f.commit_button

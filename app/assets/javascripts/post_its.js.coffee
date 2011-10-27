@@ -5,6 +5,86 @@
 $(document).ready ->
   SyntaxHighlighter.all()
 
+  ################################################
+  # Code for index
+  if $('#listing_post_it').length > 0
+
+    #default value
+    page = 1
+
+    # get parameters from url
+    getUrlVars = () ->
+        vars = {}
+        hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&')
+        for value in hashes
+            hash = value.split('=')
+            vars[hash[0]] = hash[1];
+        vars
+
+    page = getUrlVars().page if getUrlVars().page != undefined
+        
+
+
+    update_listing = () ->
+      $('#listing_post_it .spinner').show()
+      $.ajax(
+        url: Routes.post_its_path({format: 'json'})
+        dataType: 'json'
+        data:
+          page: page
+        success: (values) ->
+          if values
+            content = $('#content')
+            content.hide()
+            dummy_post_it = $('#dummy_post_it')
+            content.html('')
+
+            for value in values
+              post_it = dummy_post_it.clone()
+              post_it.find('a.title').text(value.title)
+              post_it.find('.username').text(value.username)
+              post_it.find('.updated_at').text(value.updated_at)
+              post_it.appendTo(content)
+              post_it.show()
+
+            content.show()
+            $('#current_page').text(page)
+
+        complete: () ->
+          $('#listing_post_it .spinner').hide()
+      )
+
+    # used for detect if there is new post-it to show
+    last_time = 0
+
+    window.check_for_update = () ->
+      $.ajax(
+        url: Routes.last_updated_post_its_path({format: 'json'})
+        dataType: 'json'
+        success: (value) ->
+          if value != null
+            if new Date(value.updated_at).getTime() > last_time
+              update_listing()
+              last_time = new Date(value.updated_at).getTime()
+      )
+      setTimeout('window.check_for_update()', 10000)
+
+    window.check_for_update()
+
+    
+
+    $('#previous_page').click (e) ->
+      e.preventDefault()
+      page -= 1
+      update_listing()
+
+    $('#next_page').click (e) ->
+      e.preventDefault()
+      page += 1
+      update_listing()
+
+
+  ################################################
   # Code for form
   if $('#new_post_it').length > 0
 
@@ -27,3 +107,5 @@ $(document).ready ->
 
     $('#post_it_language').change (e) ->
       render_preview()
+
+    render_preview()
