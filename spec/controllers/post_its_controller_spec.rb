@@ -40,6 +40,18 @@ describe PostItsController do
       assigns(:post_its).should eq([post_it])
     end
   end
+  
+  describe "GET last_updated" do
+    it "render updated_at of last post_it" do
+      Time.stub(:now) { Time.at(200) }
+      old_post_it = PostIt.create! valid_attributes
+      Time.stub(:now) { Time.at(500) }
+      last_post_it = PostIt.create! valid_attributes    
+      get :last_updated
+      response.should be_successful
+      DateTime.parse(JSON.parse(response.body)['updated_at']).should == last_post_it.created_at
+    end
+  end
 
   describe "GET show" do
     it "assigns the requested post_it as @post_it" do
@@ -56,9 +68,17 @@ describe PostItsController do
     end
   end
 
-  describe "GET edit" do
-    it "assigns the requested post_it as @post_it" do
+  describe "GET edit, " do
+    it "when is unauthorized, redirect to root" do
       post_it = PostIt.create! valid_attributes
+      post_it.stub(:allow_modification?) { false }
+      get :edit, :id => post_it.id.to_s
+      response.should redirect_to(root_path)
+    end
+    
+    it "when is authorized, assigns the requested post_it as @post_it" do
+      post_it = PostIt.create! valid_attributes
+      post_it.stub(:allow_modification?) { true }
       get :edit, :id => post_it.id.to_s
       assigns(:post_it).should eq(post_it)
     end
@@ -101,62 +121,91 @@ describe PostItsController do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested post_it" do
-        post_it = PostIt.create! valid_attributes
-        # Assuming there are no other post_its in the database, this
-        # specifies that the PostIt created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        PostIt.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => post_it.id, :post_it => {'these' => 'params'}
-      end
-
-      it "assigns the requested post_it as @post_it" do
-        post_it = PostIt.create! valid_attributes
-        put :update, :id => post_it.id, :post_it => valid_attributes
-        assigns(:post_it).should eq(post_it)
-      end
-
-      it "redirects to the post_it" do
-        post_it = PostIt.create! valid_attributes
-        put :update, :id => post_it.id, :post_it => valid_attributes
-        response.should redirect_to(post_it)
-      end
+  describe "PUT update, " do
+    it "when is unauthorized, redirect to root" do
+      post_it = PostIt.create! valid_attributes
+      post_it.stub(:allow_modification?) { false }
+      PostIt.any_instance.should_not_receive(:update_attributes).with({'these' => 'params'})
+      put :update, :id => post_it.id, :post_it => {'these' => 'params'}
+      response.should redirect_to(root_path)
     end
+    
+    describe 'when is authorized, ' do
+      before :each do
+        PostIt.any_instance.stub(:allow_modification?) { true }
+      end
+      
+      describe "with valid params" do
+        it "updates the requested post_it" do
+          post_it = PostIt.create! valid_attributes
+          # Assuming there are no other post_its in the database, this
+          # specifies that the PostIt created on the previous line
+          # receives the :update_attributes message with whatever params are
+          # submitted in the request.
+          PostIt.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+          put :update, :id => post_it.id, :post_it => {'these' => 'params'}
+        end
 
-    describe "with invalid params" do
-      it "assigns the post_it as @post_it" do
-        post_it = PostIt.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        PostIt.any_instance.stub(:save).and_return(false)
-        put :update, :id => post_it.id.to_s, :post_it => {}
-        assigns(:post_it).should eq(post_it)
+        it "assigns the requested post_it as @post_it" do
+          post_it = PostIt.create! valid_attributes
+          put :update, :id => post_it.id, :post_it => valid_attributes
+          assigns(:post_it).should eq(post_it)
+        end
+
+        it "redirects to the post_it" do
+          post_it = PostIt.create! valid_attributes
+          put :update, :id => post_it.id, :post_it => valid_attributes
+          response.should redirect_to(post_it)
+        end
       end
 
-      it "re-renders the 'edit' template" do
-        post_it = PostIt.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        PostIt.any_instance.stub(:save).and_return(false)
-        put :update, :id => post_it.id.to_s, :post_it => {}
-        response.should render_template("edit")
+      describe "with invalid params" do
+        it "assigns the post_it as @post_it" do
+          post_it = PostIt.create! valid_attributes
+          # Trigger the behavior that occurs when invalid params are submitted
+          PostIt.any_instance.stub(:save).and_return(false)
+          put :update, :id => post_it.id.to_s, :post_it => {}
+          assigns(:post_it).should eq(post_it)
+        end
+
+        it "re-renders the 'edit' template" do
+          post_it = PostIt.create! valid_attributes
+          # Trigger the behavior that occurs when invalid params are submitted
+          PostIt.any_instance.stub(:save).and_return(false)
+          put :update, :id => post_it.id.to_s, :post_it => {}
+          response.should render_template("edit")
+        end
       end
     end
   end
 
-  describe "DELETE destroy" do
-    it "destroys the requested post_it" do
+  describe "DELETE destroy, " do
+    it "when is unauthorized, redirect to root" do
+      PostIt.stub(:allow_modification?) { false }
       post_it = PostIt.create! valid_attributes
       expect {
-        delete :destroy, :id => post_it.id.to_s
-      }.to change(PostIt, :count).by(-1)
+          delete :destroy, :id => post_it.id.to_s
+        }.to change(PostIt, :count).by(0)
+      response.should redirect_to(root_path)
     end
+    
+    describe 'when is authorized, ' do
+      before :each do
+        PostIt.any_instance.stub(:allow_modification?) { true }
+      end
+      
+      it "destroys the requested post_it" do
+        post_it = PostIt.create! valid_attributes
+        expect {
+          delete :destroy, :id => post_it.id.to_s
+        }.to change(PostIt, :count).by(-1)
+      end
 
-    it "redirects to the post_its list" do
-      post_it = PostIt.create! valid_attributes
-      delete :destroy, :id => post_it.id.to_s
-      response.should redirect_to(post_its_url)
+      it "redirects to the post_its list" do
+        post_it = PostIt.create! valid_attributes
+        delete :destroy, :id => post_it.id.to_s
+        response.should redirect_to(post_its_url)
+      end
     end
   end
 
