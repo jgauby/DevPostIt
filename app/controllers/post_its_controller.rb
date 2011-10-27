@@ -40,6 +40,10 @@ class PostItsController < ApplicationController
   # GET /post_its/1/edit
   def edit
     @post_it = PostIt.find(params[:id])
+    
+    unless @post_it.allow_modification? params[:token]
+      return redirect_to root_path, :alert => "Vous n'avez pas les droits pour modifier ce post-it"
+    end
   end
 
   # POST /post_its
@@ -62,7 +66,11 @@ class PostItsController < ApplicationController
   # PUT /post_its/1.json
   def update
     @post_it = PostIt.find(params[:id])
-
+    
+    unless @post_it.allow_modification? params[:token]
+      return redirect_to root_path, :alert => "Vous n'avez pas les droits pour modifier ce post-it"
+    end
+    
     respond_to do |format|
       if @post_it.update_attributes(params[:post_it])
         format.html { redirect_to @post_it, :notice => 'Post it was successfully updated.' }
@@ -78,6 +86,11 @@ class PostItsController < ApplicationController
   # DELETE /post_its/1.json
   def destroy
     @post_it = PostIt.find(params[:id])
+    
+    unless @post_it.allow_modification? params[:token]
+      return redirect_to root_path, :alert => "Vous n'avez pas les droits pour supprimer ce post-it"
+    end
+    
     @post_it.destroy
 
     respond_to do |format|

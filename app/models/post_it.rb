@@ -12,6 +12,10 @@ class PostIt < ActiveRecord::Base
     PostIt.order('updated_at DESC, id DESC').limit(1).first
   end
   
+  def allow_modification? token
+    not token.blank? and self.token == token
+  end
+  
   protected
 
   def initialize_token
