@@ -116,13 +116,13 @@
   };
 
   window.Routes = {
-// post_its => /post_its(.:format)
-  post_its_path: function(options) {
-  return Utils.build_path(0, ["/post_its"], ["format"], arguments)
-  },
 // last_updated_post_its => /post_its/last_updated(.:format)
   last_updated_post_its_path: function(options) {
   return Utils.build_path(0, ["/post_its/last_updated"], ["format"], arguments)
+  },
+// post_its => /post_its(.:format)
+  post_its_path: function(options) {
+  return Utils.build_path(0, ["/post_its"], ["format"], arguments)
   }}
 ;
   window.Routes.options = defaults;

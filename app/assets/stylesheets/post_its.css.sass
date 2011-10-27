@@ -2,7 +2,22 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@mixin box-shadow($thickness:2px)
+  -webkit-box-shadow: $thickness $thickness $thickness rgba(6, 6, 6, 0.2)
+  -moz-box-shadow: $thickness $thickness $thickness rgba(6, 6, 6, 0.2)
+  box-shadow: $thickness $thickness $thickness rgba(6, 6, 6, 0.2)
+
 #listing_post_it
+  @include box-shadow
+  border: 1px solid #999
+
+  #notice_update
+    border: 1px solid #333
+    background-color: #3F3
+    @include box-shadow
+    margin: 10px
+    text-align: center
+    display: none
 
   #dummy_post_it
     display: none

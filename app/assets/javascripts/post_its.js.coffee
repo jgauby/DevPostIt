@@ -25,7 +25,7 @@ $(document).ready ->
         
 
 
-    update_listing = () ->
+    update_listing = (display_notice = false) ->
       $('#listing_post_it .spinner').show()
       $.ajax(
         url: Routes.post_its_path({format: 'json'})
@@ -50,6 +50,12 @@ $(document).ready ->
             content.show()
             $('#current_page').text(page)
 
+            $('#notice_update').slideDown(
+              200,
+              () ->
+                setTimeout('$(\'#notice_update\').slideUp(200)', 3000)
+            ) if display_notice
+
         complete: () ->
           $('#listing_post_it .spinner').hide()
       )
@@ -64,7 +70,8 @@ $(document).ready ->
         success: (value) ->
           if value != null
             if new Date(value.updated_at).getTime() > last_time
-              update_listing()
+              display_notice = (last_time != 0)
+              update_listing(display_notice)
               last_time = new Date(value.updated_at).getTime()
       )
       setTimeout('window.check_for_update()', 10000)
