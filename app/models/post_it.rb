@@ -16,6 +16,15 @@ class PostIt < ActiveRecord::Base
     not token.blank? and self.token == token
   end
   
+  # used for formatting code with plugin syntax_highlighter
+  def brush
+     if self.language.blank?
+       'plain'
+     else
+       self.language.downcase
+     end
+  end
+  
   protected
 
   def initialize_token

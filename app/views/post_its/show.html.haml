@@ -4,17 +4,14 @@
   %b Title:
   = @post_it.title
 %p
-  %b Content:
-  = @post_it.content
-%p
   %b Username:
   = @post_it.username
-%p
-  %b Email:
-  = @post_it.email
-%p
-  %b Token:
-  = @post_it.token
+
+%h1 Code
+%pre#content{:class => "brush: #{@post_it.brush};"}= @post_it.content
+
+%h1 Code (raw version)
+%pre= @post_it.content
 
 = link_to 'Edit', edit_post_it_path(@post_it)
 \|
