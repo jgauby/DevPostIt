@@ -1,0 +1,9 @@
+Bonjour <%= @post_it.username  %>,
+
+Votre post-it est visible ici : <%= post_its_url(@post_it) %>.
+
+Voici le lien pour l'éditer ou supprimer : <%= edit_post_it_url(@post_it, :token => @post_it.token) %>.
+
+Merci !
+
+L'équipe

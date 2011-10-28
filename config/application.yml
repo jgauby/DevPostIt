@@ -1,6 +1,9 @@
 # app/config/application.yml
 defaults: &defaults
 
+  sender_mail: 'dev_post_it@test.com'
+  host: '0.0.0.0:3000'
+
   salt_token: 'Cn+7#mQM-~]9=hK%cLZ.F\[2_YEH=sjcFVO}Ws6TL3uWJ1C.&5Zs3F)GNivsJ;?W'
   
   nb_post_its_per_page: 5

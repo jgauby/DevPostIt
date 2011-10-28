@@ -53,6 +53,7 @@ class PostItsController < ApplicationController
 
     respond_to do |format|
       if @post_it.save
+        PersonMailer.new_post_it(@post_it).deliver
         format.html { redirect_to @post_it, :notice => 'Post it was successfully created.' }
         format.json { render :json => @post_it, :status => :created, :location => @post_it }
       else
