@@ -10,6 +10,8 @@
 #listing_post_it
   @include box-shadow
   border: 1px solid #999
+  margin: 20px
+  padding: 20px
 
   #notice_update
     border: 1px solid #333
@@ -28,3 +30,16 @@
     margin: auto
     width: 32px
     height: 32px
+
+  #content
+    .post_it
+      margin: 15px 0
+      border: 1px solid #666
+      @include box-shadow
+      padding: 5px
+
+      div span
+        font-weight: bold
+      a.title
+        margin: 5px 0
+        line-height: 125%

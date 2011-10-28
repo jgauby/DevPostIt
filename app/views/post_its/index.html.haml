@@ -3,42 +3,20 @@
 #listing_post_it
   #notice_update Nouveau(x) post-it(s) chargé(s)
 
-  #dummy_post_it
+  #dummy_post_it.post_it
     .header
+      %div
+        Par
+        %span.username
+        Le
+        %span.updated_at
       %a.title
-      .username
-      .updated_at
   .spinner
   #content
 
 #previous_page Post-its précédents
 #current_page
 #next_page Post-its suivants
-
-
-%table
-  %tr
-    %th Title
-    %th Content
-    %th Username
-    %th Email
-    %th Language
-    %th Token
-    %th
-    %th
-    %th
-
-  - @post_its.each do |post_it|
-    %tr
-      %td= post_it.title
-      %td= post_it.content
-      %td= post_it.username
-      %td= post_it.email
-      %td= post_it.language
-      %td= post_it.token
-      %td= link_to 'Show', post_it
-      %td= link_to 'Edit', edit_post_it_path(post_it)
-      %td= link_to 'Destroy', post_it, :confirm => 'Are you sure?', :method => :delete
 
 %br
 

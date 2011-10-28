@@ -116,9 +116,21 @@
   };
 
   window.Routes = {
+// post_it => /post_its/:id(.:format)
+  post_it_path: function(_id, options) {
+  return Utils.build_path(1, ["/post_its/"], ["format"], arguments)
+  },
 // last_updated_post_its => /post_its/last_updated(.:format)
   last_updated_post_its_path: function(options) {
   return Utils.build_path(0, ["/post_its/last_updated"], ["format"], arguments)
+  },
+// edit_post_it => /post_its/:id/edit(.:format)
+  edit_post_it_path: function(_id, options) {
+  return Utils.build_path(1, ["/post_its/", "/edit"], ["format"], arguments)
+  },
+// new_post_it => /post_its/new(.:format)
+  new_post_it_path: function(options) {
+  return Utils.build_path(0, ["/post_its/new"], ["format"], arguments)
   },
 // post_its => /post_its(.:format)
   post_its_path: function(options) {

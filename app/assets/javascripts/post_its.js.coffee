@@ -41,9 +41,11 @@ $(document).ready ->
 
             for value in values
               post_it = dummy_post_it.clone()
+              post_it.attr('id', '')
               post_it.find('a.title').text(value.title)
               post_it.find('.username').text(value.username)
               post_it.find('.updated_at').text(value.updated_at)
+              post_it.find('a.title').attr('href', Routes.post_it_path(value.id))
               post_it.appendTo(content)
               post_it.show()
 
